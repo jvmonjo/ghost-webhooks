@@ -23,6 +23,6 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag ghost-webhooks:${{github.sha}}
     - name: Docker tag
-      run: docker tag jvmonjo/ghost-webhooks jvmonjo/ghost-webhooks:${{github.sha}}
+      run: docker tag ghost-webhooks:${{github.sha}} jvmonjo/ghost-webhooks:${{github.sha}}
     - name: Docker push
       run: docker push jvmonjo/ghost-webhooks:${{github.sha}}
