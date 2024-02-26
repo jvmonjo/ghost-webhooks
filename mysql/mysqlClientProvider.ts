@@ -46,7 +46,7 @@ export default class MysqlClientProvider {
    */
   async getConnection(): Promise<mysql2.Connection> {
     return await mysql2.createConnection({
-      host: "db",
+      host: process.env.DATABASE_CONTAINER_NAME,
       user: process.env.MYSQL_USER,
       password: process.env.MYSQL_PASSWORD,
       database: process.env.MYSQL_DATABASE,
