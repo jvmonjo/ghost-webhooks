@@ -91,6 +91,10 @@ async function setup() {
       }
       return;
     });
+
+    app.get('/hello', async (req, res) => {
+      res.send('Hello from the Ghost Webhooks Server!');
+    });
   
     app.listen(3000, () => console.log('Ghost Webhooks Server Started Successfully. Now listening on port 3000...'));
   } else {
