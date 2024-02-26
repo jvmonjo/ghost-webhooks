@@ -21,8 +21,12 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghost-webhooks:${{github.sha}}
-    - name: Docker tag
+      run: docker build . --file Dockerfile --tag ghost-webhooks:${{github.sha}} -tag ghost-webhooks:latest
+    - name: Docker tag 1
       run: docker tag ghost-webhooks:${{github.sha}} jvmonjo/ghost-webhooks:${{github.sha}}
-    - name: Docker push
+    - name: Docker tag 2
+      run: docker tag ghost-webhooks:latest jvmonjo/ghost-webhooks:latest
+    - name: Docker push 1
       run: docker push jvmonjo/ghost-webhooks:${{github.sha}}
+    - name: Docker push 2
+      run: docker push jvmonjo/ghost-webhooks:latest
