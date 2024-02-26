@@ -12,6 +12,9 @@ interface PostData {
     current: {
       id: string;
       slug: string;
+      title: string;
+      excerpt: string;
+      html: string;
       primary_author: {
         name: string;
         profile_image: string;
@@ -23,6 +26,9 @@ interface PostData {
 
 export interface NewsletterData {
   name: string,
+  title: string,
+  excerpt: string,
+  html: string,
   author: {
     name: string,
     image: string,
@@ -58,6 +64,7 @@ async function setup() {
     console.log("Configuration successful. Starting webhooks server...");
     app.post('/hooks', async (req, res) => {
       // get the body of the request and parse it as JSON
+      console.log("Request", req.body);
       const postData: PostData = req.body;
       console.log(`Received webhook for post ID ${postData.post.current.id}`);
       // get the post id from the object
@@ -69,6 +76,9 @@ async function setup() {
 
         let newsletterData = {
           name: newsletterName,
+          title: postData.post.current.title,
+          excerpt: postData.post.current.excerpt,
+          html: postData.post.current.html,
           author: {
             name: postData.post.current.primary_author.name,
             image: postData.post.current.primary_author.profile_image,
