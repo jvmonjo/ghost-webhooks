@@ -59,6 +59,7 @@ async function setup() {
     app.post('/hooks', async (req, res) => {
       // get the body of the request and parse it as JSON
       const postData: PostData = req.body;
+      console.log(`Received webhook for post ID ${postData.post.current.id}`);
       // get the post id from the object
       const postId = postData.post.current.id;
       try { 
@@ -84,6 +85,7 @@ async function setup() {
           );
           throw new Error(`Failed emails list: ${failureEmails}`);
         }
+        console.log(`Successfully sent ${usersToEmail.length} emails for post ID ${postId}`);
         res.sendStatus(200);
       } catch (error) {
         console.error(`Error retrieving emails for post ID ${postId}: ${error}`);
