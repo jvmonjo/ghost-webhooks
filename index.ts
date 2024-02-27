@@ -12,6 +12,7 @@ interface PostData {
     current: {
       id: string;
       slug: string;
+      url: string;
       title: string;
       excerpt: string;
       html: string;
@@ -29,6 +30,7 @@ export interface NewsletterData {
   title: string,
   excerpt: string,
   html: string,
+  url: string,
   author: {
     name: string,
     image: string,
