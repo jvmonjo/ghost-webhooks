@@ -18,6 +18,10 @@ type BatchResponse = {
 // THIS WILL NEED TO BE CHANGED TO MATCH YOUR OWN POSTMARK TEMPLATE
 type PostmarkTemplateModel = {
 	authorName: string,
+  title: string,
+  html: string,
+  excerpt: string,
+  feature_image: string,
 	newsletterName: string,
 	authorImage: string,
 	username: string,
@@ -65,9 +69,13 @@ export default class PostmarkBatchEmailSender implements BatchEmailSender {
         const model: PostmarkTemplateModel = {
             username: user.name,
             newsletterName: newsletter.name,
+            title: newsletter.title,
+            excerpt: newsletter.excerpt,
+            html: newsletter.html,
+            feature_image: newsletter.feature_image,
             authorName: newsletter.author.name,
             authorImage: newsletter.author.image,
-            postUrl: postUrl,
+            postUrl: newsletter.url,
         }
         
         return {
