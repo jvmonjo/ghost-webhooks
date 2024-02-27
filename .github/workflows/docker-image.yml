@@ -20,13 +20,16 @@ jobs:
         DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+    - name: get-npm-version
+      id: package-version
+      uses: martinbeentjes/npm-get-version-action@v1.3.1
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ghost-webhooks:${{github.sha}} --tag ghost-webhooks:latest
-    - name: Docker tag 1
-      run: docker tag ghost-webhooks:${{github.sha}} jvmonjo/ghost-webhooks:${{github.sha}}
-    - name: Docker tag 2
+      run: docker build . --file Dockerfile --tag ghost-webhooks:${{ steps.package-version.outputs.current-version}} --tag ghost-webhooks:latest
+    - name: Docker tag version
+      run: docker tag ghost-webhooks:${{ steps.package-version.outputs.current-version}} jvmonjo/ghost-webhooks:${{ steps.package-version.outputs.current-version}}
+    - name: Docker tag latest
       run: docker tag ghost-webhooks:latest jvmonjo/ghost-webhooks:latest
-    - name: Docker push 1
-      run: docker push jvmonjo/ghost-webhooks:${{github.sha}}
-    - name: Docker push 2
+    - name: Docker push version
+      run: docker push jvmonjo/ghost-webhooks:${{ steps.package-version.outputs.current-version}}
+    - name: Docker push latest
       run: docker push jvmonjo/ghost-webhooks:latest
