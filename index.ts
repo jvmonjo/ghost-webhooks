@@ -81,6 +81,7 @@ async function setup() {
           title: postData.post.current.title,
           excerpt: postData.post.current.excerpt,
           html: postData.post.current.html,
+          url: postData.post.current.url,
           author: {
             name: postData.post.current.primary_author.name,
             image: postData.post.current.primary_author.profile_image,
