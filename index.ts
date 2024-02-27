@@ -68,7 +68,6 @@ async function setup() {
     console.log("Configuration successful. Starting webhooks server...");
     app.post('/hooks', async (req, res) => {
       // get the body of the request and parse it as JSON
-      console.log("Request", req.body);
       const postData: PostData = req.body;
       console.log(`Received webhook for post ID ${postData.post.current.id}`);
       // get the post id from the object
