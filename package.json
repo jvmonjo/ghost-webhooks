@@ -1,6 +1,6 @@
 {
   "name": "ghost_webhooks",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A simple webhooks server to send emails when a new post is published on Ghost",
   "main": "index.js",
   "scripts": {
