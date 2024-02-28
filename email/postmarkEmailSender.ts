@@ -25,6 +25,7 @@ type PostmarkTemplateModel = {
 	newsletterName: string,
 	authorImage: string,
 	username: string,
+  user_email: string,
 	postUrl: string
 }
 
@@ -68,6 +69,7 @@ export default class PostmarkBatchEmailSender implements BatchEmailSender {
       const emailBatch = batch.map((user) => {
         const model: PostmarkTemplateModel = {
             username: user.name,
+            user_email: user.email,
             newsletterName: newsletter.name,
             title: newsletter.title,
             excerpt: newsletter.excerpt,
