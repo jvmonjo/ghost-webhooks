@@ -84,13 +84,14 @@ async function setup() {
         const newsletterUuid= await mysql.getNewsletterNameByPostId(postId).then((result) => result.newsletter_uuid);
         const header_image_unprocessed= await mysql.getNewsletterNameByPostId(postId).then((result) => result.header_image);
         const header_image = header_image_unprocessed.replace("__GHOST_URL__", process.env.GHOST_URL || "https://example.com");
+        const created_at = new Date(postData.post.current.created_at).toLocaleDateString();
 
         let newsletterData = {
           name: newsletterName,
           uuid: newsletterUuid,
           header_image: header_image,
           title: postData.post.current.title,
-          created_at: postData.post.current.created_at,
+          created_at: created_at,
           excerpt: postData.post.current.excerpt,
           html: postData.post.current.html,
           url: postData.post.current.url,
