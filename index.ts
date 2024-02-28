@@ -67,7 +67,7 @@ async function setup() {
   if (isServerConfigValid) {
     console.log("Configuration successful. Starting webhooks server...");
     app.post('/hooks', async (req, res) => {
-      console.log("Received request from Ghost", req.body);
+      // console.log("Received request from Ghost", req.body);
       // get the body of the request and parse it as JSON
       const postData: PostData = req.body;
       console.log(`Received webhook for post ID ${postData.post.current.id}`);
