@@ -1,7 +1,7 @@
 import mysql2, { FieldPacket, RowDataPacket } from "mysql2/promise";
 
-const EMAILS_QUERY = `SELECT members.email as email, members.name as name FROM members JOIN members_newsletters ON members.id = members_newsletters.member_id JOIN posts ON posts.newsletter_id = members_newsletters.newsletter_id WHERE posts.id = ?`;
-const NEWSLETTER_QUERY = `SELECT name FROM newsletters JOIN posts ON posts.newsletter_id = newsletters.id WHERE posts.id = ? LIMIT 1`;
+const EMAILS_QUERY = `SELECT members.email as email, members.uuid as uuid, members.name as name FROM members JOIN members_newsletters ON members.id = members_newsletters.member_id JOIN posts ON posts.newsletter_id = members_newsletters.newsletter_id WHERE posts.id = ?`;
+const NEWSLETTER_QUERY = `SELECT name, uuid FROM newsletters JOIN posts ON posts.newsletter_id = newsletters.id WHERE posts.id = ? LIMIT 1`;
 
 const MAX_CXN_RETRIES = 6;
 let CONNECTION_ATTEMPTS = 1;
@@ -9,6 +9,7 @@ let CONNECTION_ATTEMPTS = 1;
 export interface UserData { 
   email: string;
   name: string;
+  uuid: string;
 }
 
 export default class MysqlClientProvider {
@@ -84,6 +85,7 @@ export default class MysqlClientProvider {
         users.push({
           email: row.email,
           name: row.name,
+          uuid: row.uuid
         });
       });
   
@@ -102,15 +104,21 @@ export default class MysqlClientProvider {
    * @returns The name of the newsletter associated with the specified post ID.
    * @throws An error if there was an issue retrieving the newsletter name.
    */
-  async getNewsletterNameByPostId(postId: string): Promise<string> {
+  async getNewsletterNameByPostId(postId: string): Promise<{ name: string, uuid: string }> {
     try { 
       let name: string = "";
+      let uuid: string = "";
       const connection = await this.getConnection();
   
       const [rows, fields] = await connection.execute<RowDataPacket[]>(NEWSLETTER_QUERY, [postId]);
       name = rows[0].name;
+      uuid = rows[0].uuid;
 
-      return name;
+      return {
+        name: name,
+        uuid: uuid
+      
+      };
     } catch (error) {
       console.error(`Error retrieving newsletter name for post ID ${postId}: ${error}`);
       throw error;

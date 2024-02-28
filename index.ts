@@ -28,6 +28,7 @@ interface PostData {
 
 export interface NewsletterData {
   name: string,
+  uuid: string,
   title: string,
   excerpt: string,
   html: string,
@@ -76,10 +77,12 @@ async function setup() {
       try { 
         const usersToEmail: UserData[] = await mysql.getEmailsByPostId(postId);
   
-        const newsletterName = await mysql.getNewsletterNameByPostId(postId);
+        const newsletterName = await mysql.getNewsletterNameByPostId(postId).then((result) => result.name);
+        const newsletterUuid= await mysql.getNewsletterNameByPostId(postId).then((result) => result.uuid);
 
         let newsletterData = {
           name: newsletterName,
+          uuid: newsletterUuid,
           title: postData.post.current.title,
           excerpt: postData.post.current.excerpt,
           html: postData.post.current.html,
