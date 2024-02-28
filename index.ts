@@ -16,6 +16,7 @@ interface PostData {
       title: string;
       excerpt: string;
       html: string;
+      created_at: string;
       feature_image: string;
       primary_author: {
         name: string;
@@ -30,6 +31,7 @@ export interface NewsletterData {
   name: string,
   uuid: string,
   title: string,
+  created_at: string,
   header_image: string,
   excerpt: string,
   html: string,
@@ -88,6 +90,7 @@ async function setup() {
           uuid: newsletterUuid,
           header_image: header_image,
           title: postData.post.current.title,
+          created_at: postData.post.current.created_at,
           excerpt: postData.post.current.excerpt,
           html: postData.post.current.html,
           url: postData.post.current.url,

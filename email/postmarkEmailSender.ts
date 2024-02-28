@@ -19,6 +19,7 @@ type BatchResponse = {
 type PostmarkTemplateModel = {
 	authorName: string,
   emailFrom: string,
+  created_at: string,
   website_url: string,
   header_image: string,
   newsletter_uuid: string,
@@ -79,6 +80,7 @@ export default class PostmarkBatchEmailSender implements BatchEmailSender {
             header_image: newsletter.header_image,
             user_email: user.email,
             user_uuid: user.uuid,
+            created_at: newsletter.created_at,
             newsletter_uuid: newsletter.uuid,
             newsletterName: newsletter.name,
             title: newsletter.title,
