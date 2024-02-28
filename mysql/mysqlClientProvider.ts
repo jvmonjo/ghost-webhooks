@@ -1,7 +1,7 @@
 import mysql2, { FieldPacket, RowDataPacket } from "mysql2/promise";
 
 const EMAILS_QUERY = `SELECT members.email as email, members.uuid as member_uuid, members.name as name FROM members JOIN members_newsletters ON members.id = members_newsletters.member_id JOIN posts ON posts.newsletter_id = members_newsletters.newsletter_id WHERE posts.id = ?`;
-const NEWSLETTER_QUERY = `SELECT name, newsletters.uuid as newsletter_id FROM newsletters JOIN posts ON posts.newsletter_id = newsletters.id WHERE posts.id = ? LIMIT 1`;
+const NEWSLETTER_QUERY = `SELECT name, newsletters.uuid as newsletter_uuid FROM newsletters JOIN posts ON posts.newsletter_id = newsletters.id WHERE posts.id = ? LIMIT 1`;
 
 const MAX_CXN_RETRIES = 6;
 let CONNECTION_ATTEMPTS = 1;
