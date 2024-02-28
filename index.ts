@@ -80,7 +80,8 @@ async function setup() {
   
         const newsletterName = await mysql.getNewsletterNameByPostId(postId).then((result) => result.name);
         const newsletterUuid= await mysql.getNewsletterNameByPostId(postId).then((result) => result.newsletter_uuid);
-        const header_image= await mysql.getNewsletterNameByPostId(postId).then((result) => result.header_image);
+        const header_image_unprocessed= await mysql.getNewsletterNameByPostId(postId).then((result) => result.header_image);
+        const header_image = header_image_unprocessed.replace("__GHOST_URL__", process.env.GHOST_URL || "https://example.com");
 
         let newsletterData = {
           name: newsletterName,
