@@ -12,7 +12,7 @@ Ghost CMS is a great, FOSS blogging platform, but it lacks the ability to batch 
 3. Give the integration a name (e.g. "Email Batcher") and click the "Create" button.
 4. Click the "Add Webhook" button.
 5. Select the "Post published" event.
-6. Enter the URL of the webhook server (e.g. http://localhost:3000/webhook) and click the "Save" button.
+6. Enter the URL of the webhook server (e.g. http://localhost:3000/hooks) and click the "Save" button.
 ![Webhook Config](./resources/webhook-config.png)
 
 #### "Configure" Mailgun
