@@ -78,7 +78,7 @@ async function setup() {
         const usersToEmail: UserData[] = await mysql.getEmailsByPostId(postId);
   
         const newsletterName = await mysql.getNewsletterNameByPostId(postId).then((result) => result.name);
-        const newsletterUuid= await mysql.getNewsletterNameByPostId(postId).then((result) => result.uuid);
+        const newsletterUuid= await mysql.getNewsletterNameByPostId(postId).then((result) => result.newsletter_uuid);
 
         let newsletterData = {
           name: newsletterName,
