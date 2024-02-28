@@ -30,6 +30,7 @@ export interface NewsletterData {
   name: string,
   uuid: string,
   title: string,
+  header_image: string,
   excerpt: string,
   html: string,
   url: string,
@@ -79,10 +80,12 @@ async function setup() {
   
         const newsletterName = await mysql.getNewsletterNameByPostId(postId).then((result) => result.name);
         const newsletterUuid= await mysql.getNewsletterNameByPostId(postId).then((result) => result.newsletter_uuid);
+        const header_image= await mysql.getNewsletterNameByPostId(postId).then((result) => result.header_image);
 
         let newsletterData = {
           name: newsletterName,
           uuid: newsletterUuid,
+          header_image: header_image,
           title: postData.post.current.title,
           excerpt: postData.post.current.excerpt,
           html: postData.post.current.html,

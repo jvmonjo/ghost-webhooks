@@ -1,7 +1,7 @@
 import mysql2, { FieldPacket, RowDataPacket } from "mysql2/promise";
 
 const EMAILS_QUERY = `SELECT members.email as email, members.uuid as member_uuid, members.name as name FROM members JOIN members_newsletters ON members.id = members_newsletters.member_id JOIN posts ON posts.newsletter_id = members_newsletters.newsletter_id WHERE posts.id = ?`;
-const NEWSLETTER_QUERY = `SELECT name, newsletters.uuid as newsletter_uuid FROM newsletters JOIN posts ON posts.newsletter_id = newsletters.id WHERE posts.id = ? LIMIT 1`;
+const NEWSLETTER_QUERY = `SELECT name, newsletters.uuid as newsletter_uuid, newsletters.header_image as header_image  FROM newsletters JOIN posts ON posts.newsletter_id = newsletters.id WHERE posts.id = ? LIMIT 1`;
 
 const MAX_CXN_RETRIES = 6;
 let CONNECTION_ATTEMPTS = 1;
@@ -104,19 +104,22 @@ export default class MysqlClientProvider {
    * @returns The name of the newsletter associated with the specified post ID.
    * @throws An error if there was an issue retrieving the newsletter name.
    */
-  async getNewsletterNameByPostId(postId: string): Promise<{ name: string, newsletter_uuid: string }> {
+  async getNewsletterNameByPostId(postId: string): Promise<{ name: string, newsletter_uuid: string, header_image: string }> {
     try { 
       let name: string = "";
       let newsletter_uuid: string = "";
+      let header_image: string = "";
       const connection = await this.getConnection();
   
       const [rows, fields] = await connection.execute<RowDataPacket[]>(NEWSLETTER_QUERY, [postId]);
       name = rows[0].name;
       newsletter_uuid = rows[0].newsletter_uuid;
+      header_image = rows[0].header_image;
 
       return {
         name: name,
-        newsletter_uuid: newsletter_uuid
+        newsletter_uuid: newsletter_uuid,
+        header_image: header_image
       
       };
     } catch (error) {
